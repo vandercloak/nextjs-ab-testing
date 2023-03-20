@@ -12,27 +12,40 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup edge config
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. Setup a new project in vercel, using the fork of this repo
+2. Setup a new edge config in vercel
+3. Paste the following on the edge config item tab (then save): 
+```
+{
+  "ab_tests": [
+    {
+      "treatments": [
+        {
+          "size": 50,
+          "route": "/pokemon/blastoise",
+          "name": "blastoise"
+        },
+        {
+          "size": 50,
+          "route": "/pokemon/pikachu",
+          "name": "pikachu"
+        }
+      ],
+      "name": "pokemon_test",
+      "defaultRoute": "/pokemon/pikachu",
+      "routeTrigger": "/pokemon"
+    }
+  ]
+}
+```
+4. Connect your project on the edge config project tab (select the new vercel project you created)
+5. Pull your .env by running `vercel env pull .env.development.local` in the root of your project. (if you don't have the cli you will need to install it)
+6. Deploy your app or run it locally and presto!
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### The example treatment
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The treatment that I gave as an example will redirect 50% of users to a pikachu page and 50% to a blastoise page.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Feel free to modify those numbers in your edge config to switch up what percentage gets what.

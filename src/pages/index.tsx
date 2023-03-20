@@ -9,7 +9,7 @@ const Index = () => {
 
   return (
     <div>
-      <h1 className="mb-6">AB testing with Split</h1>
+      <h1 className="mb-6">AB testing with Nextjs + Vercel edge config</h1>
       <p className="mb-4">
         The pokemon page has a 50% chance of showing a blastoise and a 50%
         chance of showing a pikachu.
